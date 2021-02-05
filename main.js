@@ -1,3 +1,4 @@
+console.log(document.querySelector("#sortingDiv").attributes);
 // Start arrays section
 const students = [
   // { 
@@ -33,6 +34,7 @@ const printToDom = (divId, textAsHtml) => {
 };
 
 // Create function to create DOM string and .innerHTML
+// for student cards
 const studentRosterBuilder = (arrayOfObjects) => {
   let domString = "";
 
@@ -45,10 +47,30 @@ const studentRosterBuilder = (arrayOfObjects) => {
                     </div>
                   </div>
     `
-    printToDom("#studentCards",domString);
+    printToDom("#studentCards","Students" + domString);
 
   })
-}
+};
+
+// for expelled cards
+const expelledRosterBuilder = (arrayOfObjects) => {
+  let domString = "";
+
+  arrayOfObjects.forEach((object, i) => {
+    domString += `<div class="card my-2" style="width: 20rem;" id=${i}>
+                    <div class="card-body">
+                      <h.card-title>${object.name}</h.card-title>
+                      <p class="card-text">It's MAHVELL, BABY!!!</p>
+                      <img src="Marvel.jpg" class="img-fluid" alt="pic of Marvel superheros">
+                      <p class="card-text">${object.name} became a True Believer and is now a fan of the Marvel Universe instead :)</p>
+                      <p class="card-text">Not even Voldemort wanted them.</p>
+                    </div>
+                  </div>
+    `
+    printToDom("#expelledCards","Expelled!" + domString);
+
+  })
+};
 // End print to DOM section
 
 // Start anonymous functions
@@ -107,20 +129,30 @@ const enrollStudent = (e) => {
   document.querySelector("form").reset();
 
 };
+
 // Create function to expel student and enlist them in trueBelievers instead
 const expelStudent = (e) => {
   const targetType = e.target.type;
   const targetId = e.target.id;
 
   if (targetType==="button") {
+    trueBelievers.push(students[targetId]);
     students.splice(targetId,1);
-  } 
-
+  }; 
+  // Print student cards
   if (students.length != 0) {
     studentRosterBuilder(students);
   } else {
     printToDom("#studentCards","");
-  }
+  };
+
+  // Print expelled cards
+  if (trueBelievers.length != 0) {
+    expelledRosterBuilder(trueBelievers);
+  } else {
+    printToDom("#expelledCards","");
+  };
+
 };
 // End anonymous functions
 
