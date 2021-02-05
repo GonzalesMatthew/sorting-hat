@@ -19,6 +19,7 @@ const trueBelievers = [
 ];
 // End arrays section
 
+// Start Functions
 // Start SPA interactivity functions section
 // Create function to display Bootstrap Form once Jumbotron button clicked
 function showForm() {
@@ -73,7 +74,25 @@ const expelledRosterBuilder = (arrayOfObjects) => {
 };
 // End print to DOM section
 
-// Start anonymous functions
+// Sort function for card sets
+const sortArray = (arrayOfObjects) => {
+arrayOfObjects.sort(function(a,b) {
+  var nameA = a.name.toUpperCase(); //ignore upper and lowercase
+  var nameB = b.name.toUpperCase(); //ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  };
+  if (nameA > nameB) {
+    return 1;
+  };
+
+  // names must be equal
+  return 0;
+})
+};
+// End Functions
+
+// Start Anonymous Functions
 // C in CRUD
 // Create function to enroll student into students array and print array to DOM as cards
 const enrollStudent = (e) => {
@@ -122,6 +141,9 @@ const enrollStudent = (e) => {
   // Push new entry into students array
   students.push(obj);
 
+  // Sort Students array
+  sortArray(students);
+
   // Rebuild the DOM
   studentRosterBuilder(students);
 
@@ -139,6 +161,10 @@ const expelStudent = (e) => {
     trueBelievers.push(students[targetId]);
     students.splice(targetId,1);
   }; 
+  // Sort both card sets
+  sortArray(students);
+  sortArray(trueBelievers);
+
   // Print student cards
   if (students.length != 0) {
     studentRosterBuilder(students);
@@ -154,7 +180,7 @@ const expelStudent = (e) => {
   };
 
 };
-// End anonymous functions
+// End Anonymous Functions
 
 
 
